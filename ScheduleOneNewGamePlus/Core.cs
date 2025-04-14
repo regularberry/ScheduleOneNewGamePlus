@@ -110,11 +110,11 @@ namespace ScheduleCustomDealer
                     uncle.MSGConversation.SetRead(r: false);
 
                     // Unlock Albert the supplier
-                    Albert al = GameObject.FindObjectsOfType<Albert>().FirstOrDefault();
-                    if (al != null)
-                    {
-                        al.SetUnlockMessage();
-                    }
+                    //Albert al = GameObject.FindObjectsOfType<Albert>().FirstOrDefault();
+                    //if (al != null)
+                    //{
+                    //    al.SetUnlockMessage();
+                    //}
                 }
             }
 
@@ -141,27 +141,27 @@ namespace ScheduleCustomDealer
             // Central Canal: b77c6f13-4f79-41a3-87fe-591957b299a8
             // Town Hall Fountain: 11043234-65f2-4861-aafa-a695ee9775ad
             // Behind Supermarket: 4a1d3e02-562b-457a-a56d-5c2513a17905
-            Dictionary<String, float> initialDrops = new Dictionary<String, float>
-            {
-                { "b77c6f13-4f79-41a3-87fe-591957b299a8", 0f },
-                { "11043234-65f2-4861-aafa-a695ee9775ad", 0f },
-                { "4a1d3e02-562b-457a-a56d-5c2513a17905", 0f },
-            };
+            //Dictionary<String, float> initialDrops = new Dictionary<String, float>
+            //{
+            //    { "b77c6f13-4f79-41a3-87fe-591957b299a8", 0f },
+            //    { "11043234-65f2-4861-aafa-a695ee9775ad", 0f },
+            //    { "4a1d3e02-562b-457a-a56d-5c2513a17905", 0f },
+            //};
 
-            MelonLogger.Msg("Looking for initial cash drops...");
-            foreach (WorldStorageEntity entity in WorldStorageEntity.All)
-            {
-                string guidStr = entity.GUID.ToString();
-                if (initialDrops.ContainsKey(guidStr))
-                {
-                    CashInstance cash = entity.ItemSlots[0].ItemInstance as CashInstance;
-                    if (cash != null)
-                    {
-                        MelonLogger.Msg($"Setting Dead Drop: {guidStr} to balance {initialDrops[guidStr]}");
-                        cash.SetBalance(initialDrops[guidStr]);
-                    }
-                }
-            }
+            //MelonLogger.Msg("Looking for initial cash drops...");
+            //foreach (WorldStorageEntity entity in WorldStorageEntity.All)
+            //{
+            //    string guidStr = entity.GUID.ToString();
+            //    if (initialDrops.ContainsKey(guidStr))
+            //    {
+            //        CashInstance cash = entity.ItemSlots[0].ItemInstance as CashInstance;
+            //        if (cash != null)
+            //        {
+            //            MelonLogger.Msg($"Setting Dead Drop: {guidStr} to balance {initialDrops[guidStr]}");
+            //            cash.SetBalance(initialDrops[guidStr]);
+            //        }
+            //    }
+            //}
         }
 
         // Cops will immediately escalate to deadly force, no more tasers
@@ -225,29 +225,29 @@ namespace ScheduleCustomDealer
         }
 
         // Edit first phone call, don't trigger questline
-        [HarmonyPatch(typeof(CallInterface), nameof(CallInterface.StartCall))]
-        public static class CallInterface_StartCall_Patch
-        {
-            public static bool Prefix(CallInterface __instance, PhoneCallData data, CallerID caller, int startStage)
+        //[HarmonyPatch(typeof(CallInterface), nameof(CallInterface.StartCall))]
+        //public static class CallInterface_StartCall_Patch
+        //{
+        //    public static bool Prefix(CallInterface __instance, PhoneCallData data, CallerID caller, int startStage)
 
-            {
-                if (data.Stages[0].Text.Contains("good to hear your voice"))
-                {
-                    data.Stages[2].Text = "Listen, the guards are saying they'll let me go if you can get them what they need. They want <h1>20 bricks of legendary coke</h> and <h1>10 gold bars</h>.";
+        //    {
+        //        if (data.Stages[0].Text.Contains("good to hear your voice"))
+        //        {
+        //            data.Stages[2].Text = "Listen, the guards are saying they'll let me go if you can get them what they need. They want <h1>20 bricks of legendary coke</h> and <h1>10 gold bars</h>.";
 
-                    PhoneCallData.Stage stage = new PhoneCallData.Stage();
-                    stage.Text = "That shouldn't be too hard for my favorite nephew. I'll get back to you with more details. Love ya bud.";
-                    data.Stages[3] = stage;
+        //            PhoneCallData.Stage stage = new PhoneCallData.Stage();
+        //            stage.Text = "That shouldn't be too hard for my favorite nephew. I'll get back to you with more details. Love ya bud.";
+        //            data.Stages[3] = stage;
 
-                    Quest_WelcomeToHylandPoint quest = GameObject.FindObjectsOfType<Quest_WelcomeToHylandPoint>().FirstOrDefault();
-                    if (quest != null)
-                    {
-                        quest.Complete();
-                    }
-                }
-                return true;
-            }
-        }
+        //            Quest_WelcomeToHylandPoint quest = GameObject.FindObjectsOfType<Quest_WelcomeToHylandPoint>().FirstOrDefault();
+        //            if (quest != null)
+        //            {
+        //                quest.Complete();
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //}
 
         [HarmonyPatch(typeof(PenaltyHandler), nameof(PenaltyHandler.ProcessCrimeList))]
         public static class PenaltyHandler_ProcessCrimeList_Patch
